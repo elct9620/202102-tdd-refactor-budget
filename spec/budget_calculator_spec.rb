@@ -37,5 +37,17 @@ RSpec.describe BudgetCalculator do
 
       it { is_expected.to eq(31) }
     end
+
+    context 'when query 5 days in Jan' do
+      let(:start_at) { Date.parse('2021/1/6') }
+      let(:end_at) { Date.parse('2021/1/10') }
+      let(:budgets) do
+        [
+          Budget.new('202101', 31)
+        ]
+      end
+
+      it { is_expected.to eq(5) }
+    end
   end
 end
