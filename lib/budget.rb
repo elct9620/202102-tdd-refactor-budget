@@ -19,7 +19,7 @@ class Budget
   end
 
   def period
-    Period.new(first_day, last_day)
+    @period ||= Period.new(first_day, last_day)
   end
 
   def daily_amount
