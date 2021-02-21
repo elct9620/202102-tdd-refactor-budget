@@ -10,6 +10,8 @@ class BudgetCalculator
   end
 
   def query(start_at, end_at)
+    return 0 if start_at > end_at
+
     0
   end
 end
