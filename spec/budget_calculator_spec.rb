@@ -49,5 +49,18 @@ RSpec.describe BudgetCalculator do
 
       it { is_expected.to eq(5) }
     end
+
+    context 'when query two months' do
+      let(:start_at) { Date.parse('2021/1/1') }
+      let(:end_at) { Date.parse('2021/2/28') }
+      let(:budgets) do
+        [
+          Budget.new('202101', 62),
+          Budget.new('202102', 28)
+        ]
+      end
+
+      it { is_expected.to eq(90) }
+    end
   end
 end
