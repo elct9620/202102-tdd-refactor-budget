@@ -62,5 +62,31 @@ RSpec.describe BudgetCalculator do
 
       it { is_expected.to eq(90) }
     end
+
+    context 'when query partial days in two months' do
+      let(:start_at) { Date.parse('2021/1/10') }
+      let(:end_at) { Date.parse('2021/2/11') }
+      let(:budgets) do
+        [
+          Budget.new('202101', 62),
+          Budget.new('202102', 28)
+        ]
+      end
+
+      it { is_expected.to eq(55) }
+    end
+
+    context 'when query three months with one month no budget' do
+      let(:start_at) { Date.parse('2021/1/1') }
+      let(:end_at) { Date.parse('2021/3/31') }
+      let(:budgets) do
+        [
+          Budget.new('202101', 62),
+          Budget.new('202103', 31)
+        ]
+      end
+
+      it { is_expected.to eq(93) }
+    end
   end
 end
