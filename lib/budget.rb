@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'period'
+
 class Budget
   attr_reader :year_month, :amount
 
@@ -16,11 +18,11 @@ class Budget
     @last_day ||= first_day.next_month.prev_day
   end
 
-  def days
-    @days = last_day.mjd - first_day.mjd + 1
+  def period
+    Period.new(first_day, last_day)
   end
 
   def daily_amount
-    @daily_amount = amount.to_f / days
+    @daily_amount = amount.to_f / period.days
   end
 end

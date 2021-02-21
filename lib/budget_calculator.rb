@@ -24,7 +24,7 @@ class BudgetCalculator
       end
 
       unless budget.nil?
-        amount += budget.daily_amount * period.overlaping_days(budget)
+        amount += budget.daily_amount * period.overlaping_days(budget.period)
       end
 
       current_date = current_date.next_month
