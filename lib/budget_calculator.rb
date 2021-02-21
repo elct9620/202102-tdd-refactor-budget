@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
+require 'period'
 require 'budget'
 require 'budget_repo'
 
@@ -15,6 +16,7 @@ class BudgetCalculator
     budgets = @repo.get_all
     amount = 0
     current_date = Date.new(start_at.year, start_at.month, 1)
+    period = Period.new(start_at, end_at)
 
     until current_date > end_at
       budget = budgets.find do |budget|
@@ -22,11 +24,7 @@ class BudgetCalculator
       end
 
       unless budget.nil?
-        current_start_at = current_date.strftime('%Y%m') == start_at.strftime('%Y%m') ? start_at : current_date
-        current_end_at = current_date.strftime('%Y%m') == end_at.strftime('%Y%m') ? end_at : current_date.next_month.prev_day
-        days_in_query = current_end_at.mjd - current_start_at.mjd + 1
-
-        amount += budget.daily_amount * days_in_query
+        amount += budget.daily_amount * period.overlaping_days(budget)
       end
 
       current_date = current_date.next_month
