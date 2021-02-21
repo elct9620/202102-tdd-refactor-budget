@@ -11,13 +11,9 @@ class BudgetCalculator
   end
 
   def query(start_at, end_at)
-    return 0 if start_at > end_at
-
     period = Period.new(start_at, end_at)
-    amount = @repo.get_all.reduce(0) do |sum, budget|
+    @repo.get_all.reduce(0) do |sum, budget|
       sum + budget.daily_amount * period.overlaping_days(budget.period)
     end
-
-    amount
   end
 end
